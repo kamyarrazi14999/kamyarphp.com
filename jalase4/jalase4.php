@@ -5,3 +5,14 @@ $number2=20;
 var_dump($number1 ==$number2);
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
