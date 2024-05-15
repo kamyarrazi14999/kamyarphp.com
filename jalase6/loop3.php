@@ -12,6 +12,7 @@ $person =array('ali' , 'tagi','kami','mohamad','farid');
 // // echo $n;
 // echo "Hello $person[$i] <hr> ";
 // }
+if(isset($person)){
 if($_SERVER['REQUEST_METHOD'] =='POST'){
     echo "<h1>نتیجه جستجو</h1> <br> ";
     for ($i=0; $i <= intval($_POST['num']-1) ; $i++) { 
@@ -26,18 +27,18 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
             }
             }
 
-           if(isset($_POST['submit'])) {
-            if(!empty($_POST['num'])) {
+        //    if(isset($_POST['submit'])) {
+        //     if(!empty($_POST['num'])) {
  
 
 
-            }
-           }
+        //     }
+        //    }
         
-        else{
-          echo"عدد درست وارد کنید
-";
-        }
+//         else{
+//           echo"عدد درست وارد کنید
+// ";
+//         }
 
             
     // if ($person ==[(key($i)]=='Undefined') {
@@ -52,5 +53,5 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
 
 
 // }
-
+}
 ?>
