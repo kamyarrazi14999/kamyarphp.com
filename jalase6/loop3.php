@@ -16,13 +16,24 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
     echo "<h1>نتیجه جستجو</h1> <br> ";
     for ($i=0; $i <= intval($_POST['num']-1) ; $i++) { 
         // echo $n;
-        echo "Hello $person[$i] <hr> ";
+        echo "Hello $person[$i] <hr>
+     ";
         }
+        for ($i = 0; $i<10; $i++){
+            if ($i == '4'){
+                echo " $person[$i] <hr";
+                continue;
+            }
+            }
+        
 
+            
+    // if ($person ==[(key($i)]=='Undefined') {
+    //     echo "وجود ندارد" ;
+        
 
-      }
-   
-  
+    //   }
+   }
 // echo "<h1>foreach</h1> <br> ";
 // foreach($person as $value){
 // echo "Hello $value <hr> ";
