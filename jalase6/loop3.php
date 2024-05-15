@@ -25,7 +25,19 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
                 continue;
             }
             }
+
+           if(isset($_POST['submit'])) {
+            if(!empty($_POST['num'])) {
+ 
+
+
+            }
+           }
         
+        else{
+          echo"عدد درست وارد کنید
+";
+        }
 
             
     // if ($person ==[(key($i)]=='Undefined') {
