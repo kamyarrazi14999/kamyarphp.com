@@ -35,7 +35,10 @@ var_dump(trim($text2));echo "<hr>";
 $name= "kamiyar";
 $fam="Razi";
 echo $name.$fam ;echo' <hr>' ; 
-$textArray= explode(".",$text2);
+// $textArray= explode(".",$text2);
+$textArray= explode(" ", $text2);
 // print_r($textArray);
 var_dump($textArray);
+echo '<hr>';
+echo $textArray[5]
 ?>
