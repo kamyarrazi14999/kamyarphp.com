@@ -40,5 +40,14 @@ $textArray= explode(" ", $text2);
 // print_r($textArray);
 var_dump($textArray);
 echo '<hr>';
-echo $textArray[5]
+echo $textArray[5];
+echo "<hr>";
+echo implode("091200000",$textArray);
+echo "<hr>";
+$age=37;
+echo sprintf("My Name is %s ,My Family is %s My age is %d " , $name , $fam , $age);
+echo '<hr>';
+echo sprintf("My Name is $name \n ,My Family is \n $fam My age is \n $age ");
+echo '<hr>';
+echo sprintf("%s \n %s\n %d",$name, $fam, $age)
 ?>
