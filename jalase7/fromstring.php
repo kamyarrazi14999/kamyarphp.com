@@ -1,12 +1,74 @@
+<?php
+$text= '';
+if($_SERVER['REQUEST_METHOD']=== 'POST'){
+
+    $text = $_POST['text'];
+    
+}
+?>
+
 <style>
-textarea{
-font-size: medium;
-font-weight: 200;
-font-style: italic;
+    *{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+input{
+text-align: center;
+
+}
+
+    .dfd{
+        display: grid;
+        text-align: center;
+        align-items: center;
+        color:#008040;
+        background:#123;
+        margin: 20px;
+        direction: rtl;
+      
+    }
+.jam{
+    margin: 10px;
+background-color: #008040;
+direction: rtl;
+padding: 10px;
+border-radius: 8px;
+}
+    
+h1{
 text-align: center;
 align-items: center;
-background:#0d7335 ;
+font-size: 20px;
+font-family: 'Courier New', Courier, monospace;
 }
+ .bom{
+ font: 1em sans-serif;
+background-color: yellow;
+padding: 8px;
+text-align: center;
+align-items: center;
+direction: rtl;
+margin: 10px;
+border-radius: 50%;
+cursor: pointer;
+
+ }   
+ span{
+ margin: 10rem;
+ margin-bottom: 2rem;
+font-size: 20px;
+background-color: #008040;
+color:#123;
+box-shadow: 10px 10px 10px 10px #123;
+padding: 20px;
+
+ }
+ .bom:hover{
+ background-color: red;
+ scale: 1.1;
+
+ }
 
 
 </style>
@@ -15,28 +77,28 @@ background:#0d7335 ;
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>form php</title>
-</head>
-<body>
- <form action="" method="$_POST">
-<label for=""> name </label>
-<textarea type="text" name="text" id="" rows="10" cols="80"></textarea>
-<input type="submit">
-</form>   
-</body>
-</html>
-<?php
-$text= '';
-if($_SERVER["REQUEST_METHOD"]==='POST'){
-
-
-
-}
-
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>form php</title>
+        
+    </head>
+    <body>
+        <h1>محاسبه گر متن پردازشگر</h1>
+       <div class="dfd"><form action="" method="post">
+            <textarea class="jam" name="text" id="" rows="10"  cols="80" ></textarea> <br><br>
+            <input  class="jam" name="text2"  type="text"> <br><br>
+            <input class="bom" name="submit"  type="submit" value="submit" >
+        </form>
+        </div>   
+    </body>
+    </html>
+    <?php
+$lenght= strlen($text);
+$substr= substr_replace ($text,$_POST['text2'],11,6);
+echo '<br> <br> <br>';
+echo  "<span>تعداد کارکتر متن: $lenght</span>" ;echo' <br><br> <br> <br>';
+echo  "<span> $substr</span>" ;
 
 
 ?>
