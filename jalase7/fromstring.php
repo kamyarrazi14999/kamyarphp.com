@@ -88,17 +88,28 @@ padding: 20px;
        <div class="dfd"><form action="" method="post">
             <textarea class="jam" name="text" id="" rows="10"  cols="80" ></textarea> <br><br>
             <input  class="jam" name="text2"  type="text"> <br><br>
+            <input  class="jam" name="text3"  type="text"> <br><br>
             <input class="bom" name="submit"  type="submit" value="submit" >
         </form>
         </div>   
     </body>
     </html>
     <?php
-$lenght= strlen($text);
-$substr= substr_replace ($text,$_POST['text2'],11,6);
-echo '<br> <br> <br>';
-echo  "<span>تعداد کارکتر متن: $lenght</span>" ;echo' <br><br> <br> <br>';
-echo  "<span> $substr</span>" ;
+// $lenght= strlen($text);
+// $substr= substr_replace ($text,$_POST['text2'],1,6);
+// $num=nl2br($text,$_POST['text3']);
+// echo '<br> <br> <br>';
+// echo  "<span>تعداد کارکتر متن: $lenght</span>" ;echo' <br><br> <br> <br>';
+// echo  "<span> $substr</span>" ;echo' <br><br> <br> <br>';
+// echo  "<span> $num</span>" ; echo' <br><br> <br> <br>';
+echo nl2br($text); echo '<hr>';
+echo strrev($text);echo '<hr>';
+$textrev=strrev($text);
+if($text == $textrev){
+    echo  'this word is pallonderm';
+}
+else{
 
-
+    echo  'this word is not pikonderm';
+}
 ?>
