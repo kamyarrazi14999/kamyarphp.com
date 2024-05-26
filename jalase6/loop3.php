@@ -13,7 +13,7 @@ $person =array('ali' , 'tagi','kami','mohamad','farid');
 // echo "Hello $person[$i] <hr> ";
 // }
 if(isset($person)){
-if($_SERVER['REQUEST_METHOD'] =='POST'){
+if($_SERVER['REQUEST_METHOD'] ==='POST'){
     echo "<h1>نتیجه جستجو</h1> <br> ";
     for ($i=0; $i <= intval($_POST['num']-1) ; $i++) { 
         // echo $n;
