@@ -70,7 +70,7 @@ echo "<pre>";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 $name = $_POST['text'];
 
-$resuit = in_array('kamiyar', $person);
+$resuit = in_array($name, $person);
 // print_r($resuit);
 if($resuit==1){
     
