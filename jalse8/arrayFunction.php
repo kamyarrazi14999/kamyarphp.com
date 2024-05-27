@@ -1,5 +1,6 @@
 <form action="" method="post">
- <input type="text">
+ <input type="text" name="text">
+ <input type="submit">
 </form>
 
 
@@ -65,8 +66,45 @@ echo "<pre>";
 //  print_r($persons);
 // ksort($persons);
 // print_r($persons);
+// looding array
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+$name = $_POST['text'];
+
+$resuit = in_array('kamiyar', $person);
+// print_r($resuit);
+if($resuit==1){
+    
+    echo 'نام کاربرری از قبل موجود است ';
+    echo '<br/>';
+    print_r($person);
+}
+else{
+
+array_unshift($name, $person);
+echo 'نام کاربرری ساخته شد';
+}
+
 
 echo "</pre>";
+
+
+}
+// $resuit = in_array('kamiyar', $person);
+// // print_r($resuit);
+// if($resuit==1){
+    
+//     echo 'نام کاربرری از قبل موجود است ';
+//     echo '<br/>';
+//     print_r($person);
+// }
+// else{
+// echo 'مقدار درخواست شده موجود نیست';
+
+
+// }
+
+
+// echo "</pre>";
 
 // // echo $person[0],'',$person[1],'',$person[2];
 // // echo $persons['123456789'][0];
