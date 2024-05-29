@@ -6,11 +6,13 @@
 
 <?php
 
-$person= array('kamiyar','razi ', 37,1,'A');
+$person= array('kamiyar','Razi', 37,1,'A');
+$person2= array('razi',37,'A');
+$price = array(1000,2500,1200,4030,500,700);
 // echo $person[0],' ',$person[1],' ',$person[2];
 //Nested array
 $persons=[
-'1234'=>[ 'kamiyar','razi ', 37,1986],
+'1234'=>[ 'kamiyar','razi',37,1986],
 '1238'=>['mani','nima',33,1984],
 '1224'=>['sara','karmi',32,1985],
 '1245'=>['Mahan','roya',32,1985],
@@ -67,28 +69,74 @@ echo "<pre>";
 // ksort($persons);
 // print_r($persons);
 // looding array
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-$name = $_POST['text'];
+// if($_SERVER['REQUEST_METHOD'] == 'POST'){
+// $name = $_POST['text'];
 
-$resuit = in_array($name, $person);
-// print_r($resuit);
-if($resuit==1){
+// $resuit = in_array($name, $person);
+// // print_r($resuit);
+// if($resuit){
     
-    echo 'نام کاربرری از قبل موجود است ';
-    echo '<br/>';
-    print_r($person);
-}
-else{
+//     echo 'نام کاربرری از قبل موجود است ';
+//     echo '<br/>';
+//     print_r($person);
+// }
+// else{
 
-array_unshift($name, $person);
-echo 'نام کاربرری ساخته شد';
-}
+// array_unshift($person, $name);
+
+// echo 'نام کاربرری ساخته شد';
+
+// print_r($person);
+// }
 
 
-echo "</pre>";
+// echo "</pre>";
 
+//search array
+// }
+// $resuit = array_search('razi', $person);
+//count array
+// $resuit = count($person);
+// print_r($resuit);
+// slice array تعداد و برش
+// $resuit= array_slice($person,1,count($person));
+// echo '<pre>';
+// print_r($resuit);
+// echo'<br>';
+// print_r($person);
+// echo'<br>';
+// //merge array merged array
+// $haha=array_merge($person,$persons['1234']);
+// print_r($haha);
+//کلید ارایه نشان می دهد
+// $resuit = array_keys($person);
+// print_r($resuit);
+// $resuit = array_keys($persons);
+// print_r($resuit);
+//مقادیر ارایه نشان می دهد
+// $resuit = array_values($person);
+// print_r($resuit);
+// $resuit = array_values($persons);
+// print_r($resuit);
+// array_diff مقایسه دو ارایه در ضمینه تعداد ارایه 
+// $resuit = array_diff($person,$person2);
+// print_r($resuit);
+// print_r($person);
+// // print_r($person2);
+//ارایه های مورد نظر را می توانیم فیلتر و محدود کنیم
+// print_r($price);
+// $resuit= array_filter($price ,function($value){
+//    if($value>2000 && $value<4000){
+       
+//        echo '<br>',$value;
+//    }
+// });
+print_r($person);
+print_r(array_map('strtolower',$person));
+print_r(array_map('strtoupper',$person));
 
-}
+echo '</pre>';
+// print_r($resuit);
 // $resuit = in_array('kamiyar', $person);
 // // print_r($resuit);
 // if($resuit==1){
