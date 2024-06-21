@@ -9,11 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $text = $_POST['text'];
     $chers =mb_strlen($text);
     $words = str_word_count($text,0,'ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیآ');
-    $sent = substr_count($text, '.');
-    $parag = substr_count($text, '\n');
-
-
-}
+    $sent=count(preg_split('/[?.!؟]\s/',$text,0),PREG_SPLIT_NO_EMPTY);
+    $sent--;
+    $parag=count(preg_split('/\n\s*/',$text,0 ),PREG_SPLIT_NO_EMPTY);
+    
+} 
 ?>
 <style>
     body{
@@ -82,7 +82,7 @@ padding-right: 300px;
     <div class="result">
     تعداد کارکتر های آنالیز شده :<?php echo $chers; ?> <br> 
     تعداد کل کلمات :<?php echo $words; ?> <br>
-    تعداد کل سنت :<?php echo $sent; ?> <br>
+    تعداد کل جمله :<?php echo $sent; ?> <br>
     تعداد کل پاراگراف :<?php echo $parag; ?> <br>
 
 

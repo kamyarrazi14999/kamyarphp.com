@@ -10,9 +10,11 @@ Delightful remarkably mr on announcing themselves entreaties favourable. About t
 // echo strlen($text);
 // var_dump(strlen($text));
 echo $text1 ,'<br /> <hr />'; 
+//برای محاسبه طول یک رشته
 echo 'strlen():';
 print_r(strlen($text1));
 echo '<hr>';
+//برای یافتن موقعیت رشته 
 echo 'strpos():';
 echo strpos($text1,"is");
 echo '<hr>';
