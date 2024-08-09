@@ -1,0 +1,73 @@
+برای اینکه بتوانیم یک متد  را اجرا کنیم بار ی مثال متد 
+   استفاده می کنیم  deleteو حذف کنیم پارمتر را ار متد  get 
+در
+
+ post شما باید از علامت ? استفاده کنید تا شرط بگذارید
+ در متد  post شما باید بار اینکه شرط بگذاری از عداد یک تا صفر بگذاری تا بتوانید استفاده کنید
+  می چسبد  rowبه  deletاتفاقی که ممکن صورت بگیرد 
+ مهم است باری هر کدام از پارمترها استفاده می شود row ['id'] 
+ if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $sql = "DELETE FROM todo WHERE id = $id";
+    $nana->query($sql);
+}
+<a href="?delete=<?php echo $row['id']; ?>">❌</a>
+با این پارمتر شما می توانیم  متد را حذف کنید
+select id, val با یان پارمتر می توانید کپی کنید
+into copy_from_with_id_2 
+from with_id
+select * into without_id from with_id
+union all
+select * from with_id where 1 = 0
+با اینم پارمتر می توانید ارشییو کنید
+if (isset($_GET['archive'])) {
+    $id = $_GET['archive'];
+    $sql = "UPDATE todo SET is_archived = 1 WHERE id = $id";
+    $nana->query($sql);
+
+}
+برای تکمیل کردن پارمتر و خط زدن 
+if (isset($_GET['complete'])) {
+    $id = $_GET['complete'];
+    $sql="UPDATE todo SET is_completed = 1 WHERE id =$id ";
+    $nana->query($sql);}
+    برای اینکه یکی در ارشیو قرار دهیم از این کد استفاده می کنیم
+    $sql="UPDATE todo SET is_completed = !is_archived WHERE id = $id ";
+    این کد به ما کمک می کند برای ارشیو و تکمیل کردن تو دو لیست
+اگر صفر باشد تکمیل می شود اگر صفر نباشد تکمیل نمی شود
+if (isset($_GET['complete'])) {
+    $id = $_GET['complete'];
+    $sql="UPDATE todo SET is_completed = !is_completed WHERE id = $id ";
+    $nana->query($sql);
+}
+ارشیو کردن ایتم به صورت صفر و یک
+if (isset($_GET['archived'])) {
+    $id = $_GET['archived'];
+    $sql="UPDATE todo SET is_archived = !is_archived WHERE id = $id ";
+    $nana->query($sql);
+}
+if (esset($_GET['']))
+$id=$_GET['']
+$sgl= 
+حالت نمایش archived 
+$show_archived = isset($_GET['show_archived']) && $_GET['show_archived'] = 'true';
+      کنیم   editeبرای اینکه ایدی بفهمیم و وارد  
+      <a href="edit.php?id=<?php echo $row['id']; ?>">✏️</a>
+    برای اینکه ما بتوانیم دیتابیست را داخل edit 
+    قرار دهیم
+    <?php
+
+require './Canact.php';
+$id = $_GET['id'];
+// echo $id;
+$sql = "SELECT * FROM todo WHERE id = $id";
+$result = $nana->query($sql);
+$item = $result->fetch_assoc();
+var_dump($item);
+ست کردن ایتم در ادیت
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $item_name = $_POST['item_name'];
+    $sql =
+    "UPDATE todo SET item_name = '$item_name' WHERE id = $id";
+}
+?>
