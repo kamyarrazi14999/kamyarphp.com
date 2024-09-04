@@ -6,6 +6,7 @@ if (file_exists($fillname)) {
     file_get_contents($fillname);
 } else {
     $filecontent = "فایل مورد نظر $fillname یافت نشد";
+   
 }
 ?>
 <!DOCTYPE html>
@@ -30,8 +31,10 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
     <title>Document</title>
 </head>
 <body>
+    <!-- nl2br for line break
+    htmlspecialchars for html-->
    <div class="file-content">
-    <?php echo nl2br(htmlspecialchars($filecontent)); ?>
+    <?php echo nl2br(htmlspecialchars($filecontent));?>
    </div> 
     
 </body>

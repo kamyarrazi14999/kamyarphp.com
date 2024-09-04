@@ -1,0 +1,110 @@
+body{
+font: Arial, sans-serif;
+background-color: #f4f4f4;
+color: #333;
+margin: 0;
+padding:20px;
+}
+h1{
+font: Arial, sans-serif;
+  color: #1bc045;
+  text-align: center;
+}
+form{
+margin-bottom: 2rem;
+}
+input[type="text"],select {
+
+padding: 0.5rem;  
+margin-right: 10px;
+border-radius: 4px;
+border: 1px solid #ccc;
+}
+button {
+padding: 0.5rem 1rem;
+border-radius: 4px;
+background-color: #1bc045;
+color: #fff;
+border: none;
+cursor: pointer;
+}
+button:hover {
+  background-color: #16a085;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
+  transform: translateY(-2px);
+}
+ul{
+padding:0;
+list-style-type: none;
+}
+ul li{
+  display:flex;
+  flex-grow: 1px;
+  left: 0;
+  top: 0;
+  align-items:left;
+  justify-content: space-between;
+  margin-bottom: 10px;
+ padding: 5px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  background-color: #e1fd40;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
+
+}
+
+ul li:hover {
+  background-color: #c1f543;
+}
+
+ul li:before {
+  content: attr(data-id);
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #333;
+}
+ul li a {
+  text-decoration: none;
+  margin-left: 10px;
+}
+a:hover {
+  color: #e70707;
+  transition: color 0.3s ease;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
+  transform: translateX(2px);
+  transition: left 0.3s ease;
+  margin: 1px;
+}
+/* .fada{
+  p
+}
+.kam{
+
+
+} */
+input[type="checkbox"] {
+  margin-right: 5px;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  position: absolute;
+  left: 150px;
+
+}
+form label {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+}
+.container {
+  margin: 10%;
+
+}
