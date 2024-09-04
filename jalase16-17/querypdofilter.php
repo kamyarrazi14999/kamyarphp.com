@@ -11,17 +11,20 @@
 
 
 <?php
-if ($_SERVER 
-['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])){
-  $id = $_POST['search'];
-require './pdocanact.php';
-$sql = 'SELECT * FROM todo WHERE item_name = :id';
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+    $id = $_POST['search'];
+    require './pdocanact.php';
+    $sql = 'SELECT * FROM todo WHERE item_name = :id';
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute(['id' => $id]);
-$rom = $stmt->fetch();
-
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $id]);
+    $rom = $stmt->fetch();
+    
 }
+
+
+
+
 
 ?>
 
@@ -66,6 +69,41 @@ th, td {
 td {
   text-align: center;
 }
+input[type="text"] {
+  width:calc(2rem -200px);
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid red;
+  font-size: 16px;
+  transition: 0.5s;
+  outline: none;
+  &:focus {
+    border-bottom: 2px solid #555;
+  }
+
+}
+
+input[type="submit"] {
+  width:calc(2rem -200px);
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    background-color: #45a049;
+  }
+  &:focus {
+    outline: none;
+  }
+
+}
 
 
 
@@ -77,7 +115,7 @@ td {
 
 <body>
     <?php
-    if($rom){ ?>
+    if ($rom) { ?>
 <table>
      <thead>
                 <tr>
@@ -98,6 +136,7 @@ td {
             <td><?php echo $rom['id']; ?></td>
              <td><?php echo htmlspecialchars($rom['item_name']); ?></td>
              <td><?php echo htmlspecialchars($rom['create_at']); ?></td>
+
 
         </tr>    
 

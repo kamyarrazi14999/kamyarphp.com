@@ -21,7 +21,7 @@ $todos = $stmt->fetchALL();
     }
     th, td {
         border: 1px solid #ddd;
-        padding: 2px;
+        padding: 8px;
         text-align: left;
         font-size: 5px;
         cursor: pointer;

@@ -5,6 +5,7 @@ require './Canact.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add'])) {
     $item_name = $_POST['item_name'];
     $sql = "INSERT INTO todo (item_name) VALUES ('$item_name')";
+
     $nana->query($sql);
     echo "<script> alert('اضافه شد')</script>";
 }
