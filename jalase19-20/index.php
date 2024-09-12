@@ -1,14 +1,14 @@
 <?php
 //پیدا کردن مسیر جاری کاربر از طریق متغییر سیستم
-$directory =isset($_GET['dir']) ?'./uploads' .$_GET['dir'] : './uploads';
+$directory =isset($_GET['dir']) ?'./uploads/' .$_GET['dir'] : './uploads/';
 // لیست فایل ها و فولدر ها در مسیر جاری کاربر دریافت می‌کند
 $files= scandir($directory);
 //دریافت مشخصات کاربر در مسیر جاری
 function getFilleDetails($file_path){
     return[
         'size'=>filesize($file_path),
-        'modified'=>date('f d, Y H:i:s', filemtime($file_path)),
-        'created'=>date('f d, Y H:i:s', filectime($file_path)),
+        'modified'=>date('f d Y H:i:s', filemtime($file_path)),
+        'created'=>date('f d Y H:i:s', filectime($file_path)),
         // دریافت مجوز های فایل به صورت کارکردی یا ناکارکردی باشد
         // 'permissions'=>substr(decoct(fileperms($file_path)), -4),
            // دریافت وضعیت خواندن و نوشتن فایل
@@ -20,25 +20,23 @@ function getFilleDetails($file_path){
     ];
 
 } 
-function FunctionName($dir){
-// برای تبدیل فولدر به مسیر
-$parts=explode('/', $dir);
-$breadcrumb='';
-$currentPath='';
-foreach($parts as $part){
-    if($part!=''){
-        $currentPath .= $part.'/';
-        $breadcrumb.='<a herf="index.php?dir='.urlencode(rtrim($currentPath, '/' )).
-        '">'.htmlspecialchars( $part).'</a>/ ';
-    }  
-    return rtrim($currentPath, '/' ); 
-        
-        
-        
 
+// برای تبدیل فولدر به مسیر
+function getBreadcrumb($dir){
+    $parts = explode('/',$dir);
+    $breadcrumb = '';
+    $currentPath = '';
+
+    foreach($parts as $part){
+        if($part !== ''){
+            $currentPath .= $part . '/';
+            $breadcrumb .='
+            <a href="index.php?dir='.filter_var(urlencode(rtrim($currentPath, '/')),FILTER_SANITIZE_URL).'">'.htmlspecialchars($part,ENT_QUOTES). '</a>';
+        }
     }
-    
+    return $breadcrumb;
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -65,9 +63,15 @@ foreach($parts as $part){
      <!-- دکمه بازگشت-->
       <?php
       if(isset($_GET['dir'])):?>
-    <a href="index.php?dir=<?php urldecode(dirname($_GET['dir']));?>">Back </a>
+    <a href="index.php?dir=<?php echo urldecode(dirname($_GET['dir']));?>">Back </a>
       <?php endif; ?>
-      <form action="bluk-action.php" method="post" class="fill-list-form">
+      <h2> fill and folder  </h2>
+      <div class ='readcrumb' >
+      <!-- برای نمایش مسیر جاری کاربر -->
+      <?php echo "curnet dirctory : ".getBreadcrumb (isset($_GET['dir'])? $_GET['dir']:'') ; ?>
+      
+      </div>
+      <form action="bluk-action.php" method="post" class="">
         <ul>
          <!--  برای نمایش فایل ها و فولدر ها -->
          <?php foreach($files as $file): ?>
@@ -93,10 +97,10 @@ foreach($parts as $part){
              <!-- تعویض نام فایل و فولدر -->
              <div  class="fill-action">
                  <!-- دریافت مشخصات فایل -->
-             <a href="rename.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?> dir&=<?php echo urlencode(isset($_GET['dir'])?$_GET['dir']:'');?>">Rename</a>
-             <a href="delete.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?> dir&=<?php echo urlencode(isset($_GET['dir'])?$_GET['dir']:'');?>">Delete</a>
-             <a href="download.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?> dir&='<?php echo urlencode(isset($_GET['dir'])?$_GET['dir']:'');?>">Download</a>
-             <a href="compress.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?> dir&='<?php echo urlencode(isset($_GET['dir'])?$_GET['dir']:'');?>">Comperss</a>
+             <a href="rename.php?file=<?php echo urlencode(isset($_GET['dir']) ? $_GET['dir'].'/'.$file : $file); ?>&dir=<?php echo urlencode(isset($_GET['dir']) ? $_GET['dir'] : '');?>">Rename</a>
+             <a href="delete.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?>&dir=<?php echo urlencode(isset($_GET['dir'])? $_GET['dir']:'');?>">Delete</a>
+             <a href="download.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?>&dir='<?php echo urlencode(isset($_GET['dir'])? $_GET['dir']:'');?>">Download</a>
+             <a href="compress.php ?file=<?php echo urlencode(isset( $_GET['dir'])?$_GET['dir'].'/'.$file:$file);?>&dir='<?php echo urlencode(isset($_GET['dir'])? $_GET['dir']:'');?>">Comperss</a>
 
 
              </div>
