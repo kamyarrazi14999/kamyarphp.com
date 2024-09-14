@@ -5,7 +5,7 @@ if (isset($_POST['create'])) {
     $name  = $_POST['new_fill_name'];
     $type = $_POST['type'];
     $current_dir = isset($_POST['current_dir']) ? $_POST['current_dir'] : '';
-    $path = './uploads' . $current_dir . '/' . $name;
+    $path = './uploads/' . $current_dir . '/' . $name;
 
     // Check if the file or folder already exists
     if (file_exists($path)) {

@@ -4,8 +4,9 @@ if(isset($_GET['file']))
 $file = $_GET['file'];
 $file = './uploads/'.$file;
 $zip = new ZipArchive();
-
+// نام فایل فشرده
  $zip_filename = '/uploads'.pathinfo($file, PATHINFO_FILENAME).'.zip';
+
 if($zip->open($zip_filename, ZipArchive::CREATE) !== TRUE)
 
 
