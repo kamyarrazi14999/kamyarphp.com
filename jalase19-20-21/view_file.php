@@ -1,5 +1,6 @@
 <?php
-// برای نمایش محتوای فایل در صفحه نمایش می‌شود
+
+
 if(isset($_GET['file'])){
     $file = './uploads/'.$_GET['file'];
     if(isset($_POST['content'])){
@@ -7,7 +8,7 @@ if(isset($_GET['file'])){
         header("location: index.php");
         exit();
     }
-    //فایلی با این نام وجود ندارد
+    
     $content = file_get_contents($file);
 }
 ?>

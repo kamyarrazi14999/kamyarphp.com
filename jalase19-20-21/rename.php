@@ -3,7 +3,7 @@ if(isset($_GET['file'])) {
    $old_name ='./uploads/' .$_GET['file'];
    // var_dump($old_name) .'<br>';
    // مسیر اصلی را به پرنت وارد می کنیم
-   $prant_dir=isset($_GET['dir']) ? $_GET['dir'] : '';
+   $parent_dir=isset($_GET['dir']) ? $_GET['dir'] : '';
    if(isset ($_POST['new_name'])) {
       $new_name='./uploads/' .$_POST['new_name'];
       // rename($old_name, $new_name);

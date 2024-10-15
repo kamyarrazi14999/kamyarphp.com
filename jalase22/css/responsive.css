@@ -1,0 +1,29 @@
+.general{
+    color:blue ;
+    font-size: 50px ;
+}   
+
+div{
+ background-color: aqua;
+}
+@media screen and (min-width:1024px){
+    .general{
+        color: red;
+        font-size: 100px ;
+    }
+    
+}
+@media (max-width:768px) and (min-width:1024px) {
+    .general{
+        color: green;
+       
+    }
+}
+
+@media (max-width:768px) {
+    .general{
+        color: yellow;
+        font-size: 120px;
+        background-color: black;
+    }
+}
