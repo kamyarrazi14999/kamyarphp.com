@@ -33,6 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
             ];
             $jwt = JWT::encode($payload, 'secret_key', 'HS256');
+            $setcookie("auth_token");
 
              
         }
