@@ -1,8 +1,43 @@
 <?php
+require 'database.php';
+include 'vendor/autoload.php';
+
+
+use Firebase\JWT\JWT;
+use DOTNET\Dotenv\Dotenv;
 
 
 
 
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    // پیدا کردن کاربر با ایمیل و رمز عبور
+    $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
+    // برای  تنظیم فیلدهای ارسالی
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (password_verify($password, $user['password'])) {
+            // Generate JWT token
+            
+            // ایجاد توکن
+            $payload = [
+                'user_id' => $user['user_id'],
+                'username' => $user['username'],
+                'exp' => $user['exp'] + time() + (3600), // 1 hour 
+
+            ];
+            $jwt = JWT::encode($payload, 'secret_key', 'HS256');
+
+             
+        }
+    }
+}
 
 ?>
 
@@ -12,7 +47,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
+    
 </head>
+<?php include 'header.php' ?>
 <style>
      body{
         background-color: rgb(219, 211, 211);
@@ -74,9 +111,46 @@
         cursor: pointer;
         
     } 
+   
     
 </style>
 <body>
-    <h2>login form</h2>
+    <div class="container">
+        <h2>login form</h2>
+        <form action="login.php" method="post">
+            <input type="text" name="email" placeholder="email" required>
+            <input    type="password" name="password" placeholder="password" required>
+          
+            <span  class="eye-btn" onclick="showPassword()">
+                <i class="fas fa-eye  "></i></span> 
+                <i> <span class="close-btn"><i class="fas fa-eye-slash"></i></span></i>  
+            <input type="submit" value="login">
+        </form>
+    </div>
 </body>
+
+<script>
+
+
+
+  function showPassword() {
+    const passwordInput = document.getElementsByName('password')[0];
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+    
+      
+      
+    } else {
+      passwordInput.type = 'password';
+    }
+    
+passwordInput.addEventListener("click", () => {
+    passwordInput.classList.toggle("");
+    passwordInput.classList.toggle("close-btn");
+});
+  }
+  
+
+  
+</script>
 </html>

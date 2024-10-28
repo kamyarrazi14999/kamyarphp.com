@@ -19,7 +19,7 @@ $cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'
     <link rel="icon" href="./images/image55.jpg" type="image/x-icon" width="100px">
   
     <link rel="stylesheet" href="./fontawesome/css/all-fonts.min.css" >
-<link rel="stylesheet" href="ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    <link rel="stylesheet" href="ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" >
 
 <?php include './header.php'; ?>
@@ -54,6 +54,18 @@ $cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'
         $("#product").load("load_products.php");
       }
     });
+
+    
+    $go=document.querySelector(".product");
+    $go.addEventListener("click",function(){
+      $go.style.display="none";
+      document.querySelector("#product").innerHTML='<h1>Loading...</h1>';
+      setTimeout(function(){
+        $go.style.display="block";
+        document.querySelector("#product").innerHTML='';
+        $("#product").load("load_products.php");
+      },1000);
+    })
 
    </script>
       

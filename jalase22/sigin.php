@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" placeholder="password">
             <input type="submit" value="sigin">
             <div class="massage">
-                <?php echo $massage; ?>
+                <?php echo $massage;?>
             </div>
         </form>
     </div>
