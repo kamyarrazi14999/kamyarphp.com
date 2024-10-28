@@ -1,10 +1,12 @@
 <?php
-require 'database.php';
 include 'vendor/autoload.php';
+require 'database.php';
+session_start();
 
 
 use Firebase\JWT\JWT;
-use DOTNET\Dotenv\Dotenv;
+
+
 
 
 
@@ -26,18 +28,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // Generate JWT token
             
             // ایجاد توکن
+            $key='3e69292ce6c53066f60e58d24cc13c9f5e2a16fced5ff341237ad21ba181da2f';
+            // ایجاد توکن
             $payload = [
                 'user_id' => $user['user_id'],
                 'username' => $user['username'],
-                'exp' => $user['exp'] + time() + (3600), // 1 hour 
+                'exp' =>  time() + (3600), // 1 hour 
 
             ];
             $jwt = JWT::encode($payload, 'secret_key', 'HS256');
-            $setcookie("auth_token",$jwt, time() + 3600, '/');
+            setcookie("auth_token",$jwt, time() + 3600, '/');
             header('Location: shope.php');
+            exit();
 
              
         }
+        else {
+            echo "Invalid password";
+        }
+
+    }
+    else {
+        echo "User not found";
     }
 }
 
