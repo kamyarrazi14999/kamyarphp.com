@@ -1,7 +1,11 @@
 
 <?php
-$cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'],'quantity'))  : 0;
+$cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'],'quantity')) : 0;
 $current_page = $_SERVER['REQUEST_URI'];
+require 'auth.php';
+$islogin = isset($_SESSION['user_id']);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +35,15 @@ $current_page = $_SERVER['REQUEST_URI'];
         <li class="nav-item"><a class="nav-link" href="./cart_view.php">My Cart</a></li>
         <li class="nav-item"><a class="nav-link" href="#">My Account</a></li>
         <li class="nav-item"><a class="nav-link" href="#">My Favorete</a></li>
-        <li class="nav-item"><a class="nav-link" href="./sigin.php">sigin</a></li>
-        <li class="nav-item"><a class="nav-link" href="./login.php">login</a></li>
+        <?php if ($islogin):?>
+       <li class="nav-item">
+        <a class="nav-link" href="./logout.php">LogOut</a>
+       </li>
+       <?php else:?>
+        <li class="nav-item">
+        <a class="nav-link" href="./login.php">Login</a>
+       </li>
+       <?php endif;?>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
@@ -51,15 +62,24 @@ $current_page = $_SERVER['REQUEST_URI'];
       </ul>
       <?php if( strpos($current_page,'cart_view.php')==false): ?>
       <div class='cart-counter'>
-     <a href='cart_view.php'> <i class='fas fa-shopping-cart'></i>سبد خرید ( <?php echo $cart_count ?> )</a>
+     <a href='cart_view.php'> <i class='fas fa-shopping-cart baba'></i>سبد خرید ( <?php echo $cart_count ?> )</a>
     </div>
     <?php endif; ?>
+    <a class="nav-link " id="theme-toggle" href="">  <i class="fas fa-moon"></i></a>
+
+
       <form class="d-flex" role="search">
+        
         <input class="form-control me-2 my-input" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-btn" type="submit">Search</button>
       </form>
     </div>
   </div>
 </nav> 
+
+
+
 </body>
+
+
 </html>

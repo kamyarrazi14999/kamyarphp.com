@@ -21,11 +21,46 @@ INSERT INTO products(product_code,product_title,category,brand,image_url, produc
 ('sku007','Mens T-shirt','clothing','Adidas','./images/image-7.jpg','/products/mens-tshirt3','Adidas Men T-Shirt ....', '22.50','100' );
 // جدول کاربران 
 CREATE TABLE users(
-user-id int AUTO_INCREMENT PRIMARY KEY,
+user_id int AUTO_INCREMENT PRIMARY KEY,
 username varchar(100) NOT NULL,
 email varchar(100) NOT NULL UNIQUE,
 password varchar(255) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- جدول سفارشات
+CREATE TABLE orders(
+order_id int AUTO_INCREMENT PRIMARY KEY, /*       ایدی سفارش */
+user_id INT ,       /* ایدی کاربر */
+order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, /* تاریخ سفارش */
+status varchar(60) , /* وضعیت سفارش */
+total_amount DECIMAL(10,2) , /* مبلغ کل سفارش */
+FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- جدول سفارشات محصولات
+CREATE TABLE orderitems (
+order_item_id INT AUTO_INCREMENT PRIMARY KEY, /*  ایدی سفارش */
+ order_id INT, /* ایدی سفارش */
+ user_id INT, /* ایدی کاربر */
+ product_id INT, /* ایدی محصول */
+ quantity INT, /* تعداد محصول */
+ price DECIMAL(10,2) , /* قیمت محصول */
+ FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE , /* اینجا روی ایدی سفارش کاربر در جدول سفارشات می گذاریم */
+ FOREIGN KEY (product_id) REFERENCES products(id) /* اینجا روی ایدی محصول در جدول محصولات می گذاریم */
+);
+CREATE TABLE transactions (
+transaction_id INT AUTO_INCREMENT PRIMARY KEY, /* ایدی تراکنش */
+order_id INT , /* ایدی سفارش */
+user_id INT , /* ایدی کاربر */
+transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, /* تاریخ تراکنش */
+payment_method varchar(50) , /* شیوه پرداخت */
+ status varchar(50) , /* وضعیت تراکنش */
+ transaction_type varchar(50) , /* نوع تراکنش */
+ transtion_reference varchar(255), /* مرجع تراکنش */
+amount DECIMAL(10,2) , /* مبلغ پرداختی */
+FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE, /* اینجا روی ایدی سفارش کاربر در جدول سفارشات می گذاریم */
+ FOREIGN KEY (user_id) REFERENCES users(user_id)
+/* اینجا روی ایدی کاربر در جدول کاربران می گذاریم */
 );
 
 

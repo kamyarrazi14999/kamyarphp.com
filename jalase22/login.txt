@@ -1,0 +1,14 @@
+Req
+- Datebase -OK + Connect to db
+- Front + Back
+- Api bank
+
+1- Install Dotenv 
+2- Create .env file 
+3- Create databas.php
+4- Create shop.php 
+
+
+ساخت لاگین برای کاربر 
+اضافه کردن آدرس برای صفحه فروشگاه 
+ساخت جداول رابطه ای برای ثبت سفارش، رسید تراکنش، اقلام سفارش 

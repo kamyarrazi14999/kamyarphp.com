@@ -114,6 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         margin-bottom: 20px;
         margin-top: 20px;
     }
+    a{
+     text-decoration: none;
+    }
     
 </style>
 </head>
@@ -124,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="text" name="username" placeholder="username" value="<?php echo $name; ?>">
             <input type="email" name="email" placeholder="email" value="<?php echo $email; ?>">
             <input type="password" name="password" placeholder="password">
-            <input type="submit" value="sigin">
+            <input type="submit" value="sigin"> <br>
+            <a href="login.php"> <i class="fas fa-user-plus"></i> Login</a>
             <div class="massage">
                 <?php echo $massage;?>
             </div>

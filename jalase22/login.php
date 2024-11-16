@@ -1,15 +1,12 @@
 <?php
+include 'header.php';
 include 'vendor/autoload.php';
-require 'database.php';
-session_start();
-
-
 use Firebase\JWT\JWT;
+if(session_status() === PHP_SESSION_NONE){
+    session_start();
+}
 
-
-
-
-
+require 'database.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -31,13 +28,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $key='3e69292ce6c53066f60e58d24cc13c9f5e2a16fced5ff341237ad21ba181da2f';
             // ایجاد توکن
             $payload = [
-                'user_id' => $user['user_id'],
-                'username' => $user['username'],
-                'exp' =>  time() + (3600), // 1 hour 
+                "user_id" => $user['user_id'],
+                "username" => $user['username'],
+                'exp' =>  time() + 3600 // 1 hour 
 
             ];
-            $jwt = JWT::encode($payload, 'secret_key', 'HS256');
-            setcookie("auth_token",$jwt, time() + 3600, '/');
+            $jwt = JWT::encode($payload, $key, 'HS256'); 
+            setcookie("auth_token",$jwt, time() + 3600);
             header('Location: shope.php');
             exit();
 
@@ -63,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <title>login</title>
     
 </head>
-<?php include 'header.php' ?>
+
 <style>
      body{
         background-color: rgb(219, 211, 211);
@@ -107,7 +104,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         border-radius: 10px;
         margin: 5px;
         cursor: pointer;
+        border-color: blue;
+
     }
+input::placeholder{
+    color:blue;
+    
+}
+input:focus{
+    color: blue;
+
+}
+    
     h2{
         text-align: center;
         margin: 10px;
@@ -124,47 +132,146 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         margin: 5px;
         cursor: pointer;
         
+    }
+    @media screen and (max-width: 600px) {
+        .container{
+            width: 300px;
+            height: 300px;
+        }
+        input{
+            width: 100%;
+        }
+        
     } 
+    @media screen and (max-width: 400px) {
+        input[type="submit"]{
+            width: 100%;
+        }
+    }
+    .eye-btn{
+      
+        cursor: pointer;
+
+    }
+    @media screen and (max-width: 400px) {
+        .eye-btn{
+            font-size: 2px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }   
+
+    }
+    @media screen and (max-width: 600px) {
+        .eye-btn{
+            font-size: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+    }
+    i{
+        font-size: 15px;
+        color: red;  
+        font-weight: bold;
+        transition: color 0.3s ease-in-out;
+    }
    
+ 
+    i:hover{
+        color: #791506;
+    }
+    @media screen and (max-width: 400px) {
+        i{
+            font-size: 5px;
+        }
+    }
+    @media  screen and (max-width: 300px) {
+        h2{
+            font-size: 15px;
+        }
+        input[type="submit"]{
+            font-size: 10px;
+        }
+        input[type="text"], input[type="password"]{
+            width: 100%;
+        }
+        .password-container{
+            margin-bottom: 10px;
+        }
+        i{
+            font-size: 5px;
+        }
+        .eye-btn{
+            font-size: 2px;
+        }
+        form{
+            margin-top: 10px;
+        }
+    }
+    a{
+        text-decoration: none;
+        color: white;
+        margin-top: 10px;
+        transition: color 0.3s ease-in-out;
+    }
+   a:hover{
+        color: #791506;
+        text-decoration:dotted;
+    }
+    @media screen and (max-width: 400px) {
+        a{
+            font-size: 10px;
+        }
+    }
     
 </style>
 <body>
     <div class="container">
-        <h2>login form</h2>
+        <h2>Login Form</h2>
         <form action="login.php" method="post">
-            <input type="text" name="email" placeholder="email" required>
-            <input    type="password" name="password" placeholder="password" required>
-          
-            <span  class="eye-btn" onclick="showPassword()">
-                <i class="fas fa-eye  "></i></span> 
-                <i> <span class="close-btn"><i class="fas fa-eye-slash"></i></span></i>  
-            <input type="submit" value="login">
+            <input type="text" name="email" placeholder="Email" required>
+            <div class="password-container">
+             
+                <input type="password" name="password" placeholder="Password" required id="passwordInput">
+                <span class="eye-btn" onclick="showPassword()">
+                    <i class="fas fa-eye" id="eyeIcon"></i> <br>
+                </span>
+                <a href="./sigin.php"> <i class="fas fa-user-plus"></i> Sign Up</a><br>
+                <a href="./forget.php">  <i class="fas fa-key"></i> Forgot Password</a>
+            </div>
+            <input type="submit" value="Login">
         </form>
     </div>
-</body>
-
-<script>
 
 
+    <script>
+function showPassword() {
+    const passwordInput = document.getElementById("passwordInput");
+    const eyeIcon = document.getElementById("eyeIcon");
 
-  function showPassword() {
-    const passwordInput = document.getElementsByName('password')[0];
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-    
-      
-      
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
     } else {
-      passwordInput.type = 'password';
+        passwordInput.type = "password";
+        eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
     }
+}
+</script>
+
+
+
+
+
+</body>
+  
+
     
-passwordInput.addEventListener("click", () => {
-    passwordInput.classList.toggle("");
-    passwordInput.classList.toggle("close-btn");
-});
-  }
+    
+    
+
   
 
   
-</script>
+
 </html>
