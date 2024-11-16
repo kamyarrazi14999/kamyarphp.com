@@ -43,3 +43,21 @@ $db->commit();
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> PAYMENT</title>
+</head>
+<body>
+  <div>
+    <h1> paymenat geteway parsian-mellet</h1>
+    <form action="payment_process.php" method="post">
+        
+
+  </div>  
+
+    
+</body>
+</html>
