@@ -52,12 +52,11 @@ CREATE TABLE transactions (
 transaction_id INT AUTO_INCREMENT PRIMARY KEY, /* ایدی تراکنش */
 order_id INT , /* ایدی سفارش */
 user_id INT , /* ایدی کاربر */
+amount DECIMAL(10,2) , /* مبلغ پرداختی */
 transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, /* تاریخ تراکنش */
 payment_method varchar(50) , /* شیوه پرداخت */
  status varchar(50) , /* وضعیت تراکنش */
- transaction_type varchar(50) , /* نوع تراکنش */
  transtion_reference varchar(255), /* مرجع تراکنش */
-amount DECIMAL(10,2) , /* مبلغ پرداختی */
 FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE, /* اینجا روی ایدی سفارش کاربر در جدول سفارشات می گذاریم */
  FOREIGN KEY (user_id) REFERENCES users(user_id)
 /* اینجا روی ایدی کاربر در جدول کاربران می گذاریم */
