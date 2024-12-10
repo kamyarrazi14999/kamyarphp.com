@@ -61,8 +61,15 @@ FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE, /* این�
  FOREIGN KEY (user_id) REFERENCES users(user_id)
 /* اینجا روی ایدی کاربر در جدول کاربران می گذاریم */
 );
-
-
+CREATE TABLE blog_posts (
+post_id INT AUTO_INCREMENT PRIMARY KEY, /* ایدی پست */
+title varchar(255) , /* عنوان پست */
+content TEXT  , /* متن پست */
+media varchar(255) NOT NULL , /* مدیا پست */
+user_id INT , /* ایدی کاربر */
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, /* تاریخ ایجاد پست */
+FOREIGN KEY (user_id) REFERENCES users(user_id)on DELETE CASCADE /* اینجا روی ایدی کاربر در جدول کاربران می گذاریم */
+);
 
 
 

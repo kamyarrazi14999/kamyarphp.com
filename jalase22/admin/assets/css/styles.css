@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* متغیرها برای رنگ‌ها و اندازه‌ها */
+:root {
+    --sidebar-width: 300px;
+    --sidebar-bg-color: #579ca8;
+    --sidebar-hover-bg-color: #555;
+    --sidebar-active-bg-color: #23da12;
+    --text-color: #fff;
+    --main-bg-color: #f2f2f2; /* فعال کردن رنگ پس‌زمینه اصلی */
+    --main-text-color: #222224;
+}
+
+/* نوار کناری */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg-color);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    color: var(--text-color);
+    padding-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    height: 100vh;
+}
+
+i {
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;    
+    font-size: 24px;
+}
+
+.sidebar-header {
+    margin-top: -20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.sidebar-header h2 {
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    padding: 15px;
+    text-align: left;
+}
+
+.menu li a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, font-weight 0.3s ease;
+}
+
+.mama {
+    animation-name: mama;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease; /* اصلاح انیمیشن */
+    animation-fill-mode: forwards;
+}
+
+@keyframes mama {
+    0% {
+        transform: rotate(0deg);
+        transform-origin: 0% 0%;
+    }
+    25% {
+        transform: rotate(15deg);
+        transform-origin: 0% 0%;
+    }
+    50% {
+        transform: rotate(0deg);
+        transform-origin: 0% 0%;
+    }
+    75% {
+        transform: rotate(-15deg);
+        transform-origin: 0% 0%;
+    }
+    100% {
+        transform: rotate(0deg);
+        transform-origin: 0% 0%;
+    }
+}
+
+.menu li a:hover {
+    background-color: var(--sidebar-hover-bg-color);
+}
+
+.menu li a.active {
+    background-color: var(--sidebar-active-bg-color);
+    font-weight: bold;
+    padding-left: 20px;   
+}
+
+/* محتوای اصلی */
+.main-content {
+    margin-left: calc(var(--sidebar-width) + 50px);
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--main-bg-color);
+}
+
+.main-content h1 {
+    color: var(--main-text-color);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* رسانه‌ها */
+@media (max-width: 768px) {
+    .sidebar {
+        --sidebar-width: 200px;
+        padding-top: 10px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+        transition: all 0.3s ease;
+    }
+}

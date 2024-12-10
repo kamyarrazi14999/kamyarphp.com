@@ -2,6 +2,9 @@
 include 'header.php';
 include 'vendor/autoload.php';
 use Firebase\JWT\JWT;
+// echo $_SERVER['HTTP_REFERER'];
+// echo '<br>';
+// echo $_SERVER['REQUEST_URI'];
 if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
@@ -35,8 +38,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             ];
             $jwt = JWT::encode($payload, $key, 'HS256'); 
             setcookie("auth_token",$jwt, time() + 3600);
-            header('Location: shope.php');
-            exit();
+            // header('Location: shope.php');
+            // exit();
+        //   بررسی آدرس قبلی کاربر دریافت آدرس قبلی کاربر 
+        $redirectTo = isset($_SESSION['redirect_to']) ? $_SESSION['redirect_to'] : 'shope.php'; 
+        // echo "<br>".$redirectTo;
+        header("location: $redirectTo");
+        exit();
 
              
         }

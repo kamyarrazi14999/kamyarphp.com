@@ -33,7 +33,7 @@ $islogin = isset($_SESSION['user_id']);
           <a class="nav-link active" aria-current="page" href="http://localhost/jalase22/shope.php">Home</a>
         </li>
         <li class="nav-item"><a class="nav-link" href="./cart_view.php">My Cart</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">My Account</a></li>
+        <li class="nav-item"><a class="nav-link" href="./admin/">My Account</a></li>
         <li class="nav-item"><a class="nav-link" href="#">My Favorete</a></li>
         <?php if ($islogin):?>
        <li class="nav-item">
@@ -48,12 +48,13 @@ $islogin = isset($_SESSION['user_id']);
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="#">Action</a></li>
+  <li><a class="dropdown-item" href="#">Another action</a></li>
+  <li><hr class="dropdown-divider"></li>
+  <li><a class="dropdown-item" href="#">Something else here</a></li>
+  <li><a class="dropdown-item" href="#">Separated link</a></li>
+</ul>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link disabled">Link</a>
