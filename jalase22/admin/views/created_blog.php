@@ -1,6 +1,16 @@
 <?php
 include '../controllers/cheaklogin.php';
-include '../../database.php';
+// include '../../database.php';
+// بررسی اینکه سشن استارت خورده از قبل یا نه
+if(session_status()){
+    session_start();
+}
+// بررسی اینکه آیا پیامی داریم یا نه
+if (isset($_SESSION['message'])) {
+    echo '<div class="alert">'.htmlspecialchars ($_SESSION['message']). '</div>';
+    unset($_SESSION['message']);  // حذف پیام بعد ا�� نمایش
+}
+//  بررسی اینکه کاربر از منو وارد شده یا نه
 
 
 ?>
