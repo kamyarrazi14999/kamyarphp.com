@@ -1,14 +1,14 @@
-
+<
 <div class="sidebar">
     <div class="sidebar-header">
-        <h2>Welcome <?php echo isset($_SESSION['user_name']) ? $_SESSION['user_name'] : "admin" ?></h2>
+        <h2>Welcome <?php echo $_SESSION['username'] ?? "" ?></h2>
     </div >
     <ul class="menu">
         <li><a href="dashboard.php" class="<?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>"><i class="fas fa-tachometer-alt mama"></i> Dashboard</a> </li>
         <li><a href="blog.php" class="<?= basename($_SERVER['PHP_SELF']) == 'blog.php' ? 'active' : '' ?>"><i class="fas fa-newspaper  mama"></i> Blog </a>
     <ul class="sub-menu">
         <li> <a href=" blog.php " class="<?= basename($_SERVER['PHP_SELF']) == 'show_blog.php' ? 'active' : ''?>"> Show Post </a></li>
-        <li> <a href="created_blog.php" class="<?= basename($_SERVER['PHP_SELF']) == 'created_blog.php' ? 'active' : ''?> "> Add Post</a></li>
+        <li> <a href="created_blog.php? from_menu=true" class="<?= basename($_SERVER['PHP_SELF']) == 'created_blog.php' ? 'active' : ''?> "> Add Post</a></li>
     </ul>
     </li>
         <li><a href="page.php" class="<?= basename($_SERVER['PHP_SELF']) == 'page.php' ? 'active' : '' ?>"> <i class="fas fa-file bab mama"></i> Page</a></li>
