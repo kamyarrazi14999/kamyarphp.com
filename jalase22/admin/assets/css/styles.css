@@ -36,7 +36,7 @@ i {
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s ease;    
-    font-size: 24px;
+    font-size: 15px;
 }
 
 .sidebar-header {
@@ -56,7 +56,7 @@ i {
 }
 
 .menu li {
-    padding: 15px;
+    padding: 8px;
     text-align: left;
     position: relative; /* برای زیرمنو */
 }
@@ -152,7 +152,7 @@ i {
     0 1px 3px rgba(0,0,0,0.1),
     0 0 1px rgba(0,0,0,0.2),
    ;
-    width: 200px;
+    width: 300px;
     margin-left: 10px;
     display: none;
    

@@ -53,7 +53,7 @@ try {
     <!-- Include sidebar -->
     <?php include 'sidebar.php'; ?>
     <div class="main-content">
-        <h1>Product</h1>
+        <h1>Products</h1>
         <?php if(count($products) > 0): ?>
             <table class="table table-bordered table-hover product-table">
                 <thead class="  fa-italic">
