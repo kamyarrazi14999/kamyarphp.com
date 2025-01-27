@@ -89,12 +89,5 @@ try {
         <?php endif; ?>
     </div>
 </body>
-<script>
-$(document).ready(function() {
-$.('../controllers/deleteproduct.php');
-});
 
-
-
-</script>
 </html>

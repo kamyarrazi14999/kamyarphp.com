@@ -29,9 +29,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/fontawesome/css/all-fonts.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
     <style>
         .product-table {
@@ -99,7 +100,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <tbody>
                 <?php foreach($products as $product): ?>
-                    <tr>
+                    <tr  id="product-<?php echo $product['id'];?>">
                         <td><?php echo htmlspecialchars($product['id']); ?></td>
                         <td><?php echo htmlspecialchars($product['product_code']); ?></td>
                         <td><?php echo htmlspecialchars($product['product_title']); ?></td>
@@ -110,9 +111,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo htmlspecialchars($product['stock_quantity']); ?></td>
                         <td>
                             <a href="../controllers/editproduct.php?id=<?php echo $product['id']; ?>" class="btn btn-primary ">Edit</a>
-
-                            <a href="../controllers/deleteproduct.php?id=<?php echo $product['id']; ?>" class="btn btn-danger ">Delete</a>
-                            <button class="btn btn-danger btn-sm delet-product " data-id="<?php  ; ?>">delete B</button>
+                            <button class="btn btn-danger btn-sm delete-product " data-id="<?php echo htmlspecialchars($product['id'])  ; ?>">delete B</button>
                        
                         </td>
                     </tr>
@@ -127,8 +126,31 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
        
      </div>
 </body>
-<script>
-
+<script>  
+  $(document).ready(function(){
+        $('.delete-product').click(function(){
+            var productId = $(this).data('id');
+            var row = $('#product-' + productId);
+            if(confirm('Are you sure to delete this product?')){
+                $.ajax({
+                    url: '../controllers/deleteproduct.php',
+                    type: 'POST',
+                    data: {id: productId},
+                    success: function(response){
+                        if(response.success){
+                            row.remove();
+                            alert('Product deleted successfully!');
+                        } else {
+                            alert('Failed to delete product!');
+                        }
+                    },
+                    error: function(){
+                            alert('Failed to delete product!');
+                    }
+                });
+            }
+        });
+       });
 </script>
 
 </html>
