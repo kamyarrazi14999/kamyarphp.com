@@ -21,7 +21,7 @@ if($post_id){
 }else {
     $_SESSION['message'] = "پست مورد نظر یافت نشد";
     header('Location: blog.php');
-    exit;  
+    exit;
 }
 
 ?>
