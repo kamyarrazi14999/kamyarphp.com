@@ -1,17 +1,23 @@
 <?php
 include 'cheaklogin.php';
 include '../../database.php';
+if(session_status() === PHP_SESSION_NONE){
+    session_start();
+}
 
 // دریافت اطلاعات از فرم
 $product_id = $_POST['product_id'] ?? '';
+$title = $post['title'];
+$content = $post['content'];
+
 
 try{
     // ا
-    $stmt = $db->prepare("UPDATE products SET product_name = :product_name, product_price = :product_price, product_quantity = :product_quantity WHERE product_id = :product_id");
+    $stmt = $db->prepare("UPDATE products SET product_code = :product_code, price = :price, stock_quantity = :stock_quantity WHERE product_id = :product_id  LIMIT 1  ");
     $stmt->execute([
-        'product_name' => $_POST['product_name'],
-        'product_price' => $_POST['product_price'],
-        'product_quantity' => $_POST['product_quantity'],
+        'product_code' => $_POST['product_code'],
+        'price' => $_POST['price'],
+        'stock_quantity' => $_POST['stock_quantity'],
         'product_id' => $product_id
     ]);
     //نمایش پیغام
@@ -44,7 +50,7 @@ catch (PDOException $e) {
    <h1>Edit Post</h1>
         <form action="../controllers/save_post.php" method="POST">
  
-            <label for="title">Blog Editor</label>
+            <label for="title">product Editor</label>
             <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($title); ?> " required> <br>
             <textarea name="editorproduct" id="editorproduct"> <?php echo htmlspecialchars($content, ENT_QUOTES, 'UTF-8'); ?> 
 
