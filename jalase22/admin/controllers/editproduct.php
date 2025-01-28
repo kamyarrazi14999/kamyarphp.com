@@ -1,43 +1,33 @@
 <?php
-include 'cheaklogin.php';
+include './cheaklogin.php';
 include '../../database.php';
-if(session_status() === PHP_SESSION_NONE){
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// دریافت اطلاعات از فرم
-$product_id = $_POST['product_id'] ?? '';
-$title = $post['title'];
-$content = $post['content'];
+// Get product ID from the URL
+$product_id = $_GET['id'] ?? '';
 
+// Fetch product details based on the product ID
+$product_query = "SELECT * FROM products WHERE id=?";
+$stmt = $db->prepare($product_query);
+$stmt->execute([$product_id]);
+$product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-try{
-    // ا
-    $stmt = $db->prepare("UPDATE products SET product_code = :product_code, price = :price, stock_quantity = :stock_quantity WHERE product_id = :product_id  LIMIT 1  ");
-    $stmt->execute([
-        'product_code' => $_POST['product_code'],
-        'price' => $_POST['price'],
-        'stock_quantity' => $_POST['stock_quantity'],
-        'product_id' => $product_id
-    ]);
-    //نمایش پیغام
-    $_SESSION['message'] = "کالا با موفقیت ویرایش شد";
-}
-catch (PDOException $e) {
-    die("خطا در ویرایش کالا: " . $e->getMessage());
+// If no product found with the given ID, redirect to the products page
+if (!$product) {
+    header('Location: products.php');
+    exit;
 }
 
-
-
-
-
+// Rest of the code...
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editproduct</title>
+    <title>Edit Product</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/fontawesome/css/all-fonts.min.css">
     <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
@@ -46,38 +36,32 @@ catch (PDOException $e) {
 </head>
 <body>
     <?php include '../views/sidebar.php'; ?>
-   <div class="main-content">
-   <h1>Edit Post</h1>
-        <form action="../controllers/save_post.php" method="POST">
- 
-            <label for="title">product Editor</label>
-            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($title); ?> " required> <br>
-            <textarea name="editorproduct" id="editorproduct"> <?php echo htmlspecialchars($content, ENT_QUOTES, 'UTF-8'); ?> 
-
-        
-        
-        </textarea> </br>
-            <button type="submit">Save </button>
-         
+    <div class="main-content">
+        <h1>Edit Product</h1>
+        <form action="" method="POST">
+            <label for="title">Product Title</label>
+            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($product['product_title']); ?>" required> <br>
+            <textarea name="editorproduct" id="editorproduct"><?php echo htmlspecialchars($product['product_code'], ENT_QUOTES, 'UTF-8'); ?></textarea> <br>
+            <button type="submit">Save</button>
         </form>
-     </div>
-     <script>
+    </div>
+    <script>
         CKEDITOR.replace('editorproduct', {
-            height:500,
-            toolbar:[
-                {name:'Clipboard',items:['cut','copy','paste','undo','redo']},
-                {name:'Basicstyles',items:['Bold','Italic','Underline','Strike','-','RemoveFormat']},
-                {name:'Paragraph',items:['NumberedList','BulletedList']},
-                {name:'Link',items:['Link','Unlink']},
-                {name:'Insert',items:['Image','Table','HorizontalRule','SpecialChar']},
-                {name:'Tools',items:['Maximize']},
-                {name:'document',items:['Source','Preview', 'Print']}
+            height: 500,
+            toolbar: [
+                {name: 'Clipboard', items: ['cut', 'copy', 'paste', 'undo', 'redo']},
+                {name: 'Basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat']},
+                {name: 'Paragraph', items: ['NumberedList', 'BulletedList']},
+                {name: 'Link', items: ['Link', 'Unlink']},
+                {name: 'Insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']},
+                {name: 'Tools', items: ['Maximize']},
+                {name: 'document', items: ['Source', 'Preview', 'Print']}
             ],
             removePlugins: 'elementspath',
-            resize_enabled:true,
-        });      
-     </script>
-     </div>
-  
+            resize_enabled: true,
+        });
+    </script>
 </body>
 </html>
+
+
