@@ -1,5 +1,5 @@
 <?php
-include 'checklogin.php';
+include './cheaklogin.php';
 include '../../database.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -24,7 +24,7 @@ if (!$product) {
     } else {
         $_SESSION['message'] = "Failed to update product";
     }
-    
+
     header('Location: products.php');
     exit;
 }
