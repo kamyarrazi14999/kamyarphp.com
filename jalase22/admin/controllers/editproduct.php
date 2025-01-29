@@ -1,5 +1,5 @@
 <?php
-include './cheaklogin.php';
+include 'checklogin.php';
 include '../../database.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -16,6 +16,15 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // If no product found with the given ID, redirect to the products page
 if (!$product) {
+    $product_query = "SELECT UPDATE products SET product_title =?, product_code =? WHERE id =?";
+    $stmt = $db->prepare($product_query);
+    $stmt->execute([$product['product_title'], $product['product_code'], $product_id]);
+    if ($stmt->rowCount() > 0) {
+        $_SESSION['message'] = "Product updated successfully";
+    } else {
+        $_SESSION['message'] = "Failed to update product";
+    }
+    
     header('Location: products.php');
     exit;
 }
@@ -41,7 +50,11 @@ if (!$product) {
         <form action="" method="POST">
             <label for="title">Product Title</label>
             <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($product['product_title']); ?>" required> <br>
-            <textarea name="editorproduct" id="editorproduct"><?php echo htmlspecialchars($product['product_code'], ENT_QUOTES, 'UTF-8'); ?></textarea> <br>
+            <textarea name="editorproduct" id="editorproduct"><?php echo htmlspecialchars($product['product_code'],
+
+
+            
+            ENT_QUOTES, 'UTF-8'); ?></textarea> <br>
             <button type="submit">Save</button>
         </form>
     </div>
