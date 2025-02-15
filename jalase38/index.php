@@ -204,10 +204,6 @@
             $.ajax({
                
                  url: `//api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=f235a7d1451b2be4b94e8ad0ce5fb084`,
-
-                
-                
-               
                 type: 'GET',
                 success: function(response) {
                     let weatherInfo = `
