@@ -8,6 +8,9 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    
+    
+
     <title>Map</title>
     <style>
     /* Add your custom styles here */
@@ -132,8 +135,7 @@
         let marker;
         let markers = [];
         let routingControl;
-
-        // تعریف آیکن برای مکانهای ذخیره شده
+;        // تعریف آیکن برای مکانهای ذخیره شده
         let savedLocationIcon = L.icon({
             iconUrl: 'car.png',
             iconSize: [25, 41],
@@ -148,7 +150,6 @@
             iconAnchor: [16, 60],
             popupAnchor: [0, -76]
         });
-
         function loadLocations(){
             $.ajax({
                 url: 'api.php',
@@ -156,7 +157,6 @@
                 success: function(response){
                     markers.forEach(m => map.removeLayer(m));
                     markers = [];
-
                     response.forEach(loc =>{
                         let newMarker = L.marker([loc.latitude, loc.longitude], {icon: savedLocationIcon})
                             .addTo(map)
@@ -194,8 +194,66 @@
 
             // افزودن دکمه مسیریابی به مکان جدید
             marker.bindPopup(
-                `<button class="route-btn" onclick="routeTo(${lat}, ${lng})">مسیریابی</button>`
+                `<button class="route-btn" onclick="routeTo(${lat}, ${lng})">مسیریابی</button>
+                <button class="weather-btn" onclick="showWeather(${lat}, ${lng})">نمایش آب و هوا</button>`
             ).openPopup();
+        });
+
+        // نمایش اطلاعات آب و هوا
+        function showWeather(lat, lng) {
+            $.ajax({
+               
+                 url: `//api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=f235a7d1451b2be4b94e8ad0ce5fb084`,
+
+                
+                
+               
+                type: 'GET',
+                success: function(response) {
+                    let weatherInfo = `
+                        <strong>آب و هوا:</strong> ${response.weather[0].description}<br>
+                        <strong>دما:</strong> ${response.main.temp} °C<br>
+                        <strong>رطوبت:</strong> ${response.main.humidity} %<br>
+                        <strong>سرعت باد:</strong> ${response.wind.speed} m/s
+                    `;
+                    L.popup()
+                        .setLatLng([lat, lng])
+                        .setContent(weatherInfo)
+                        .openOn(map);
+                }
+            });
+        }
+
+        // جستجوی مکان‌های نزدیک
+        $('#search').on('input', function(){
+            let searchText = $(this).val().toLowerCase().trim();
+            markers.forEach(m => {
+                let popupText = m.getPopup().getContent().toLowerCase();
+                if(popupText.includes(searchText)){
+                    map.setView(m.getLatLng(), 14);
+                    m.openPopup();
+                }
+            });
+
+            if (searchText.length > 0) {
+                $.ajax({
+                    url: `https://nominatim.openstreetmap.org/search?format=json&q=${searchText}`,
+                    type: 'GET',
+                    success: function(response) {
+                        response.forEach(loc => {
+                            let newMarker = L.marker([loc.lat, loc.lon], {icon: savedLocationIcon})
+                                .addTo(map)
+                                .bindPopup(
+                                    `<strong>${loc.display_name}</strong>
+                                    <button class="route-btn" onclick="routeTo(${loc.lat}, ${loc.lon})">مسیریابی</button>
+                                    <button class="weather-btn" onclick="showWeather(${loc.lat}, ${loc.lon})">نمایش آب و هوا</button>`
+                                );
+                            
+                            markers.push(newMarker);
+                        });
+                    }
+                });
+            }
         });
 
         // ارسال اطلاعات به سرور و ذخیره سازی آن در دیتابیست 
@@ -215,17 +273,7 @@
             });
         });
 
-        $('#search').on('input', function(){
-            let searchText = $(this).val().toLowerCase().trim();
-            markers.forEach(m => {
-                let popupText = m.getPopup().getContent().toLowerCase();
-                if(popupText.includes(searchText)){
-                    map.setView(m.getLatLng(), 14);
-                    m.openPopup();
-                }
-            });
-        });
-
+        // ویرایش موقعیت مکانی
         function editLocation(id, name, latitude, longitude) {
             $('#name').val(name);
             $('#latitude').val(latitude);
@@ -239,6 +287,7 @@
             });
         }
 
+        // مسیریابی بین دو نقطه
         function routeTo(lat, lng) {
             if (routingControl) {
                 map.removeControl(routingControl);
@@ -251,6 +300,7 @@
                 routeWhileDragging: true
             }).addTo(map);
 
+            // نمایش مسافت و زمان مسیریابی
             routingControl.on('routesfound', function(e) {
                 let routes = e.routes;
                 let summary = routes[0].summary;
@@ -260,7 +310,6 @@
                     .openOn(map);
             });
         }
-        
     </script>
 </body>
 </html>
