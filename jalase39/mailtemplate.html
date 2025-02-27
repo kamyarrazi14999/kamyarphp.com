@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        h1 {
+            color: blue;
+        }
+
+        @media (max-width: 600px) {
+            div {
+                width: 100%;
+                padding: 5px;
+                margin: 5px;
+                animation-name: example;
+                animation-duration: 1s;
+                animation-timing-function: ease-in-out;
+                animation-iteration-count: infinite;
+            }
+            @keyframes example {
+                0%   {background-color: red;}
+                50%  {background-color: yellow;}
+                100% {background-color: red;}
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+
+            
+            img {
+                width: 50px;
+                height: 50px;
+            }
+            
+
+            img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            font-family: fantasy;
+        }
+
+
+        
+            
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Hello, Customer!</h1>
+        <p>This is a sample paragraph.</p>
+        <p>این متن فارسی است</p>
+        <img src="https://2.img-dpreview.com/files/p/E~C1000x0S4000x4000T1200x1200~articles/3925134721/0266554465.jpeg" alt="" width="300" height="300">
+    </div>
+</body>
+</html>

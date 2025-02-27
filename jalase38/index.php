@@ -49,6 +49,8 @@
         font-weight: bold;
         padding: 5px;
         font-size: 12px;
+        
+        
     }
 
     .delete-btn:hover {
@@ -137,7 +139,7 @@
         let routingControl;
 ;        // تعریف آیکن برای مکانهای ذخیره شده
         let savedLocationIcon = L.icon({
-            iconUrl: 'car.png',
+            iconUrl: 'van.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [0, -34]
@@ -230,7 +232,7 @@
                     m.openPopup();
                 }
             });
-
+            //  
             if (searchText.length > 0) {
                 $.ajax({
                     url: `https://nominatim.openstreetmap.org/search?format=json&q=${searchText}`,
@@ -306,6 +308,7 @@
                     .openOn(map);
             });
         }
+
     </script>
 </body>
 </html>
