@@ -1,4 +1,3 @@
-
 <?php
 
 require 'auth.php';
@@ -12,7 +11,7 @@ $islogin = isset($_SESSION['user_id']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="./css/header.css">
+     <link rel="stylesheet" href="./css/head.css">
      <link rel="stylesheet" href="./css/style.css">
      <link rel="stylesheet" href="./fontawesome/css/all-fonts.min.css" >
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -29,9 +28,9 @@ $islogin = isset($_SESSION['user_id']);
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://localhost/jalase22/shope.php">Home</a>
+          <a class="nav-link active" aria-current="page" href="">Home</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="./cart_view.php">My Cart</a></li>
+        <li class="nav-item"><a class="nav-link" href="goiz.php">gize</a></li>
         <li class="nav-item"><a class="nav-link" href="./admin/">My Account</a></li>
         <li class="nav-item"><a class="nav-link" href="#">My Favorete</a></li>
         <?php if ($islogin):?>
@@ -60,11 +59,7 @@ $islogin = isset($_SESSION['user_id']);
         </li> -->
         
       </ul>
-      <?php if( strpos($current_page,'cart_view.php')==false): ?>
-      <div class='cart-counter'>
-     <a href='cart_view.php'> <i class='fas fa-shopping-cart baba'></i>سبد خرید ( <?php echo $cart_count ?> )</a>
-    </div>
-    <?php endif; ?>
+    
     <a class="nav-link " id="theme-toggle" href="">  <i class="fas fa-moon"></i></a>
 
 
@@ -83,3 +78,5 @@ $islogin = isset($_SESSION['user_id']);
 
 
 </html>
+
+      
