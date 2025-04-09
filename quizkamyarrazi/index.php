@@ -4,18 +4,21 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$databasename = 'websiteguize';
+
+$DB_HOST = $_ENV['DB_HOST'];
+$DB_DATABASE = $_ENV['DB_DATABASE'] ;
+$DB_USERNAME = $_ENV['DB_USERNAME'] ;
+$DB_PASSWORD = $_ENV['DB_PASSWORD'] ;
+$DB_PORT = $_ENV['DB_PORT'] ;
 
 try {
-    $conn = new mysqli($servername, $username, $password, $databasename);
+    $conn = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE, $DB_PORT);
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        throw new Exception("Connection failed: " . $conn->connect_error);
     }
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -42,22 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultTwo = mysqli_query($conn, $queryTwo);
 
     if ($resultTwo) {
-        $row = mysqli_fetch_assoc($resultTwo);
-        if ($row) {
-            $queryThree = "INSERT INTO `result` (`result`) VALUES ('" . $row['ans'] . "')";
+        if (mysqli_affected_rows($conn) > 0) {
+            $queryThree = "INSERT into compare (value ) values ('correct')";
             $resultThree = mysqli_query($conn, $queryThree);
             if ($resultThree) {
-                if (mysqli_affected_rows($conn) > 0) {
-                    echo "Data inserted successfully.";
-                } else {
-                    echo "No rows affected.";
-                }
+                echo "Data inserted successfully.";
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
         } else {
-            echo "No rows found.";
+            echo "No rows affected.";
         }
+
+
     }
 }
   
