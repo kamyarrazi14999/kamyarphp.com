@@ -1,18 +1,43 @@
 
 <?php
-require 'vendor/autoload.php';
-use Firebase\JWT\JWT;
-require 'config.php';
+require_once 'config.php';
+session_start();
 
-// if(session_status() === PHP_SESSION_NONE){
-//     session_start();
-// }
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+try {
+    $user_id = $_SESSION['user_id'];
+    $query = $pdo->prepare("SELECT * FROM users WHERE user_id = :id"); // Replace 'user_id' with the correct column name
+    $query->bindParam(':id', $user_id, PDO::PARAM_INT);
+    $query->execute();
+    $user = $query->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) {
+        session_destroy();
+        header('Location: login.php');
+        exit;
+    }
+    
+} catch (PDOException $e) {
+    echo 'Error: ' . $e->getMessage();
+    exit;
+}
 
 
-// if(!isset($_SESSION['user_id']) ||!isset($_SESSION['role'])){
-//     header("Location: head.php");
-// }
 ?>
+
+
+
+
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +46,7 @@ require 'config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/quiz.css" />  
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./fontawesome/css/all-fonts.min.css" >
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>Quiz App</title>
@@ -29,7 +54,9 @@ require 'config.php';
 
 <body>
     <div class="hadi">
+        <form action="../../result.php" method="post">
         <?php include 'head.php';?>
+      
         <div class="quiz-container" id="quiz">
             <div class="timer-container">
                 <div id="timer">02:10</div>
@@ -39,7 +66,7 @@ require 'config.php';
             </div>
             <ul>
                 <li>
-                    <input type="radio" name="answer" id="a" class="answer" hidden>
+                    <input type="radio" name="answer11" id="a" class="answer" hidden>
                     <label for="a" class="label_quiz">
                         <div class="dot"></div>
                         <span id="a_text">
@@ -49,7 +76,7 @@ require 'config.php';
                 </li>
 
                 <li>
-                    <input type="radio" name="answer" id="b" class="answer" hidden>
+                    <input type="radio" name="answer1" id="b" class="answer" hidden>
                     <label for="b" class="label_quiz">
                         <div class="dot"></div>
                         <span id="b_text">
@@ -59,7 +86,7 @@ require 'config.php';
                 </li>
 
                 <li>
-                    <input type="radio" name="answer" id="c" class="answer" hidden>
+                    <input type="radio" name="answer2" id="c" class="answer" hidden>
                     <label for="c" class="label_quiz">
                         <div class="dot"></div>
                         <span id="c_text">
@@ -69,7 +96,7 @@ require 'config.php';
                 </li>
 
                 <li>
-                    <input type="radio" name="answer" id="d" class="answer" hidden>
+                    <input type="radio" name="answer3" id="d" class="answer" hidden>
                     <label for="d" class="label_quiz">
                         <div class="dot"></div>
                         <span id="d_text">
@@ -79,9 +106,11 @@ require 'config.php';
                 </li>
             </ul>
 
-            <button id="submit">بعدی</button>
+            <button id="submit" name="submit">بعدی</button>
         </div>
+ 
     </div>
+    </form>
     
     <script>
         const quizData = [
@@ -160,21 +189,24 @@ require 'config.php';
         ];
 
         // گرفتن اجزای HTML
-        const quiz = document.getElementById('quiz');
-        const answerEls = document.querySelectorAll('.answer');
-        const questionEl = document.getElementById('question');
-        const a_text = document.getElementById('a_text');
-        const b_text = document.getElementById('b_text');
-        const c_text = document.getElementById('c_text');
-        const d_text = document.getElementById('d_text');
-        const submitBtn = document.getElementById('submit');
-        const label_quiz_all = document.querySelectorAll('.label_quiz');
-        const timer = document.getElementById('timer');
+const quiz = document.getElementById('quiz');
+const answerEls = document.querySelectorAll('.answer');
+const questionEl = document.getElementById('question');
+const a_text = document.getElementById('a_text');
+const b_text = document.getElementById('b_text');
+const c_text = document.getElementById('c_text');
+const d_text = document.getElementById('d_text');
+const submitBtn = document.getElementById('submit');
+const label_quiz_all = document.querySelectorAll('.label_quiz'); // تغییر این خط
+const timer = document.getElementById('timer');
 
         // متغیرهای مورد استفاده
+        // شماره سوال فعلی 
         let currentQuiz = 0;
+        // تعداد پاسخ صحیح
         let score = 0;
-        let timeLeft = 70;
+        // مقدار اولیه زمان
+        let timeLeft = 120;
 
         // ایجاد یک تایمر برای زمان
         let intervalTime = setInterval(function () {
@@ -184,7 +216,7 @@ require 'config.php';
             timer.innerHTML = minutes + ':' + seconds;
             timeLeft--;
 
-            if (timeLeft < 60) {
+            if (timeLeft < 40) {
                 timer.style.color = '#ff6666';
             }
             if (timeLeft > 0) {

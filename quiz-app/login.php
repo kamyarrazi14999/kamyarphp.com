@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
 
-            $redirectTo = isset($_SESSION['redirect_to']) ? $_SESSION['redirect_to'] : 'shope.php';
+            $redirectTo = isset($_SESSION['redirect_to']) ? $_SESSION['redirect_to'] : 'head.php';
             header("location: $redirectTo");
             exit();
         } else {

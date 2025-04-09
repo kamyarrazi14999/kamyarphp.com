@@ -1,0 +1,107 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #007BFF;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+table th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #ca1b1b;
+    transition: background-color 0.3s ease;
+}
+
+table caption {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #007BFF;
+    transition: background-color 0.3s ease;
+}
+
+input[type="radio"]:checked {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #0cc760;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.timer-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(#007BFF 0%, #007BFF var(--progress), #ddd var(--progress), #ddd 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.timer-circle:hover {
+    transform: scale(1.1);
+}
+
+.timer-circle::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform: scale(0.9);
+}

@@ -31,6 +31,16 @@ CREATE TABLE questions (
     correct_answer INT NOT NULL,
     FOREIGN KEY (exam_id) REFERENCES exams(exam_id)
 );
+
+-- جدول انتخاب‌ها
+CREATE TABLE answers (
+    answer_id INT PRIMARY KEY AUTO_INCREMENT,
+    result_id INT,
+    question_id INT,
+    selected_answer INT,
+    FOREIGN KEY (result_id) REFERENCES results(result_id),
+    FOREIGN KEY (question_id) REFERENCES questions(question_id)
+);
 -- جدول نتایج
 CREATE TABLE results (
     result_id INT PRIMARY KEY AUTO_INCREMENT,

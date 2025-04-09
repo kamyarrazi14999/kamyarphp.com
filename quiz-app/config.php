@@ -1,3 +1,4 @@
+
 <?php
 require 'vendor/autoload.php';
 use Dotenv\Dotenv;
@@ -11,13 +12,19 @@ $database = $_ENV['DB_DATABASE'];
 $username = $_ENV['DB_USERNAME'];
 $password = $_ENV['DB_PASSWORD'];
 
-
-try{
+try {
     $dns = "mysql:host=$host;port=$port;dbname=$database;charset=utf8mb4";
-    $pdo = new PDO($dns, $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // خطاهای کانکشن
-} catch (PDOException $e){
-    die("Connection Error: " . $e->getMessage());
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
+    $pdo = new PDO($dns, $username, $password, $options);
+} catch (PDOException $e) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Connection Error: ' . $e->getMessage()]);
+    exit;
 }
 
 ?>

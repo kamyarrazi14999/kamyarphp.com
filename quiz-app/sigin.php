@@ -118,12 +118,13 @@ a:hover {
 <body>
    
     <div class="container">
-        <h2>sigin user</h2>
-        <form action="login.php" method="post">
-            <input type="text" name="username" placeholder="username" value="<?php echo $name; ?>">
-            <input type="email" name="email" placeholder="email" value="<?php echo $email; ?>">
-            <input type="password" name="password" placeholder="password">
-            <input type="submit" value="sigin"> <br>
+        <h2>Sign in User</h2>
+        <form action="sigin.php" method="post">
+            <input type="text" name="username" placeholder="Username" value="<?php echo $name; ?>" required>
+            <input type="email" name="email" placeholder="Email" value="<?php echo $email; ?>" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Sign in">
+            <br>
             <a href="login.php"> <i class="fas fa-user-plus"></i> Login</a>
             <div class="massage">
                 <?php echo $massage;?>

@@ -1,9 +1,10 @@
 
 <?php
-
+$cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'],'quantity'))  : 0;
+$current_page = $_SERVER['REQUEST_URI'];
 require 'auth.php';
-$islogin = isset($_SESSION['user_id']);
 
+$isLogingIn = isset($_SESSION['user_id']);
 
 ?>
 

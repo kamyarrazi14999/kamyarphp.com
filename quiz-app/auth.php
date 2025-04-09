@@ -14,8 +14,8 @@ if(isset($_COOKIE['auth_token'])){
         $jwt = $_COOKIE['auth_token'];
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
        
-        $_SESSION['user_id'] = $decoded->user_id; // اصلاح شده
-        $_SESSION['username'] = $decoded->username; // اصلاح شده
+        $_SESSION['user_id'] = $decoded->user_id; 
+        $_SESSION['username'] = $decoded->username; // 
     } catch (Exception $e) {
         // Invalid token
         if(basename($_SERVER['PHP_SELF']) !== 'head.php'){
