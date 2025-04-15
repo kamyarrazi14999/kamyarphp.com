@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($resultTwo) {
         if (mysqli_affected_rows($conn) > 0) {
-            $queryThree = "INSERT into compare (value ) values ('correct')";
+            $queryThree = "INSERT into compare (value) values ('correct')";
             $resultThree = mysqli_query($conn, $queryThree);
         }else {
-            $queryThree ="INSERT into compare (value ) values ('incorrect')";
+            $queryThree ="INSERT into compare (value) values ('incorrect')";
             $resultThree = mysqli_query($conn, $queryThree);
         }
       
