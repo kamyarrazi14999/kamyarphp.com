@@ -48,18 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (mysqli_affected_rows($conn) > 0) {
             $queryThree = "INSERT into compare (value ) values ('correct')";
             $resultThree = mysqli_query($conn, $queryThree);
-            if ($resultThree) {
-                echo "Data inserted successfully.";
-            } else {
-                echo "Error: " . mysqli_error($conn);
-            }
-        } else {
-            echo "No rows affected.";
+        }else {
+            $queryThree ="INSERT into compare (value ) values ('incorrect')";
+            $resultThree = mysqli_query($conn, $queryThree);
         }
+      
    
 
     }
 }
+
 
   
 ?>
