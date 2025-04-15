@@ -24,7 +24,7 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
         $q1 = $_POST['q1'];
-        $stmt = "INSERT INTO `qsn` (`qsn`) VALUES ('$q1')";
+        $stmt = "INSERT INTO qsn (qsn) VALUES ('$q1')";
         try {
             $result = mysqli_query($conn, $stmt);
             if ($result) {
@@ -56,51 +56,111 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "No rows affected.";
         }
-
+   
 
     }
 }
+
   
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .quiz-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .timer-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .timer-circle {
+            --progress: 100%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid #007bff;
+            display: inline-block;
+            position: relative;
+        }
+        .timer-circle span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .pagination-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-<link rel="stylesheet" href="./style.css">
 <body>
-    <form action="" method="post">
-        <table align="center" border="1" width="500px" height="500px">
-            <tr>
-                <td>What is the height of Mt. Everest?</td>
-            </tr>
-            <tr>
-                <td><input type="radio" name="q1" value="8848">8848</td>
-            </tr>
-            <tr>
-                <td><input type="radio" name="q1" value="8847">8847</td>
-            </tr>
-            <tr>
-                <td><input type="radio" name="q1" value="8846">8846</td>
-            </tr>
-            <tr>
-                <td><input type="radio" name="q1" value="8845">8845</td>
-            </tr>
-            <tr>
-                <td><input type="submit" name="submit" value="Submit"></td>
-                <td><input type="submit" name="check" value="Check Result"></td>
-            </tr>
-        </table>
-    </form>
-    <div class="timer-container" style="text-align: center; margin-top: 20px;">
-        <div class="timer-circle" style="--progress: 100%; width: 100px; height: 100px; border-radius: 50%; border: 5px solid #007bff; display: inline-block; position: relative;">
-            <span id="timer-number" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 20px; font-weight: bold;">100</span>
+    <div class="quiz-container">
+        <h1>Quiz</h1>
+        <form action="" method="post">
+            <table class="table table-bordered">
+                <tr>
+                    <td>What is the height of Mt. Everest?</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="q1" value="8848"> 8848</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="q1" value="8847"> 8847</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="q1" value="8846"> 8846</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="q1" value="8845"> 8845</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="check" class="btn btn-secondary">Check Result</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div class="timer-container">
+            <div class="timer-circle">
+                <span id="timer-number">100</span>
+            </div>
+        </div>
+        <div class="pagination-container">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center" id="pagination">
+                    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=4">4</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=5">5</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
