@@ -4,7 +4,7 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
+// Database connection
 $DB_HOST = $_ENV['DB_HOST'];
 $DB_DATABASE = $_ENV['DB_DATABASE'] ;
 $DB_USERNAME = $_ENV['DB_USERNAME'] ;
@@ -40,16 +40,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error: " . $e->getMessage();
         }
     }
-
+// برای دریافت پاسخ درست از دیتابیس
     $queryTwo = "SELECT qsn.qsn,answer.ans from answer inner join (SELECT qsn from qsn order by id desc limit 1) as qsn on qsn.qsn = answer.ans";
     $resultTwo = mysqli_query($conn, $queryTwo);
 
     if ($resultTwo) {
         if (mysqli_affected_rows($conn) > 0) {
+            // درجای اینجا می‌توانید کدهای مربوط به پردازش نتایج را اضافه کنید
             $queryThree = "INSERT into compare (value) values ('correct')";
             $resultThree = mysqli_query($conn, $queryThree);
         }else {
-            $queryThree ="INSERT into compare (value) values ('incorrect')";
+            $queryThree ="INSERT into compare (value ) values ('incorrect')";
             $resultThree = mysqli_query($conn, $queryThree);
         }
       
@@ -57,6 +58,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 }
+// check کردن جواب درست و نادرست
+if (isset($_POST['check'])) {
+    $queryfour = "SELECT value from compare order by id desc limit 1";
+    $resultfour = mysqli_query($conn, $queryfour);
+
+    if ($resultfour) {
+        if (mysqli_num_rows($resultfour)) {
+            $row = mysqli_fetch_assoc($resultfour);
+            if ($row['value'] == 'correct') {
+                echo "<script>alert('Correct Answer!');</script>";
+            } else {
+                echo "<script>alert('Incorrect Answer!');</script>";
+            }
+        } else {
+            echo "No rows found.";
+        }
+    }
+}
+
 
 
   
@@ -140,6 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td>
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                         <button type="submit" name="check" class="btn btn-secondary">Check Result</button>
+                         <button type="submit" name="next" class="btn btn-success">Next</button>
+
                     </td>
                 </tr>
             </table>
@@ -196,6 +218,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
             }
         }, 1000);
+
+
+    // Handle pagination dynamically
+    const paginationLinks = document.querySelectorAll('#pagination .page-link');
+    paginationLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const page = event.target.getAttribute('href').split('=')[1];
+        fetch(`?page=${page}`)
+            .then(response => response.text())
+            .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const newQuizContent = doc.querySelector('.quiz-container').innerHTML;
+            document.querySelector('.quiz-container').innerHTML = newQuizContent;
+            history.pushState(null, '', `?page=${page}`);
+            })
+            .catch(error => console.error('Error fetching page:', error));
+        });
+    });
     </script>
 </body>
 </html>
