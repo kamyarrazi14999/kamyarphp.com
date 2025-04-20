@@ -75,7 +75,9 @@ if (isset($_POST['check'])) {
             echo "No rows found.";
         }
     }
+    
 }
+
 
 
 
