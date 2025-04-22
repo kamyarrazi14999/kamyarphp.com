@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $queryThree ="INSERT into compare (value ) values ('incorrect')";
             $resultThree = mysqli_query($conn, $queryThree);
         }
+        
       
    
 
