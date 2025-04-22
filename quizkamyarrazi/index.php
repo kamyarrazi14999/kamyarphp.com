@@ -65,15 +65,17 @@ if (isset($_POST['check'])) {
 
     if ($resultfour) {
         if (mysqli_num_rows($resultfour)) {
-            $row = mysqli_fetch_assoc($resultfour);
-            if ($row['value'] == 'correct') {
-                echo "<script>alert('Correct Answer!');</script>";
-            } else {
-                echo "<script>alert('Incorrect Answer!');</script>";
+            echo "<table class='table table-bordered'>";
+            echo "<tr><th>Result</th></tr>";
+            while ($row = mysqli_fetch_assoc($resultfour)) {
+                echo "<tr><td>" . htmlspecialchars($row['value']) . "</td></tr>";
             }
+            echo "</table>";
         } else {
-            echo "No rows found.";
+            echo "<p>No rows found.</p>";
         }
+    } else {
+        echo "<p>Error: " . mysqli_error($conn) . "</p>";
     }
 }
 
