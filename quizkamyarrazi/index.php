@@ -1,3 +1,4 @@
+
 <?php
 require './vendor/autoload.php';
 use Dotenv\Dotenv;
@@ -6,10 +7,10 @@ $dotenv->load();
 
 // Database connection
 $DB_HOST = $_ENV['DB_HOST'];
-$DB_DATABASE = $_ENV['DB_DATABASE'] ;
-$DB_USERNAME = $_ENV['DB_USERNAME'] ;
-$DB_PASSWORD = $_ENV['DB_PASSWORD'] ;
-$DB_PORT = $_ENV['DB_PORT'] ;
+$DB_DATABASE = $_ENV['DB_DATABASE'];
+$DB_USERNAME = $_ENV['DB_USERNAME'];
+$DB_PASSWORD = $_ENV['DB_PASSWORD'];
+$DB_PORT = $_ENV['DB_PORT'];
 
 try {
     $conn = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE, $DB_PORT);
@@ -40,35 +41,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error: " . $e->getMessage();
         }
     }
-// برای دریافت پاسخ درست از دیتابیس
-    $queryTwo = "SELECT qsn.qsn,answer.ans from answer inner join (SELECT qsn from qsn order by id desc limit 1) as qsn on qsn.qsn = answer.ans";
-    $resultTwo = mysqli_query($conn, $queryTwo);
 
-    if ($resultTwo) {
-        if (mysqli_affected_rows($conn) > 0) {
-            // درجای اینجا می‌توانید کدهای مربوط به پردازش نتایج را اضافه کنید
-            $queryThree = "INSERT into compare (value) values ('correct')";
-            $resultThree = mysqli_query($conn, $queryThree);
-        }else {
-            $queryThree ="INSERT into compare (value ) values ('incorrect')";
-            $resultThree = mysqli_query($conn, $queryThree);
+    // Check answer and insert into compare table
+    if (isset($_POST['check'])) {
+        $queryTwo = "SELECT qsn.qsn, answer.ans FROM answer INNER JOIN (SELECT qsn FROM qsn ORDER BY id DESC LIMIT 1) AS qsn ON qsn.qsn = answer.ans";
+        $resultTwo = mysqli_query($conn, $queryTwo);
+
+        if ($resultTwo) {
+            if (mysqli_num_rows($resultTwo)) {
+                $row = mysqli_fetch_assoc($resultTwo);
+                $correctAnswer = $row['ans'];
+                $submittedAnswer = $row['qsn'];
+
+                if ($correctAnswer === $submittedAnswer) {
+                    $queryThree = "INSERT INTO compare (value) VALUES ('correct')";
+                } else {
+                    $queryThree = "INSERT INTO compare (value) VALUES ('incorrect')";
+                }
+
+                $resultThree = mysqli_query($conn, $queryThree);
+            } else {
+                echo "<p>No rows found.</p>";
+            }
+        } else {
+            echo "<p>Error: " . mysqli_error($conn) . "</p>";
         }
-        
-      
-   
-
     }
 }
-// check کردن جواب درست و نادرست
-if (isset($_POST['check'])) {
-    $queryfour = "SELECT value from compare order by id desc limit 1";
-    $resultfour = mysqli_query($conn, $queryfour);
 
-    if ($resultfour) {
-        if (mysqli_num_rows($resultfour)) {
+// Fetch and display results from compare table
+if (isset($_POST['results'])) {
+    $queryFour = "SELECT value FROM compare ORDER BY id DESC LIMIT 1";
+    $resultFour = mysqli_query($conn, $queryFour);
+
+    if ($resultFour) {
+        if (mysqli_num_rows($resultFour)) {
             echo "<table class='table table-bordered'>";
             echo "<tr><th>Result</th></tr>";
-            while ($row = mysqli_fetch_assoc($resultfour)) {
+            while ($row = mysqli_fetch_assoc($resultFour)) {
                 echo "<tr><td>" . htmlspecialchars($row['value']) . "</td></tr>";
             }
             echo "</table>";
@@ -80,9 +90,6 @@ if (isset($_POST['check'])) {
     }
 }
 
-
-
-  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -163,8 +170,7 @@ if (isset($_POST['check'])) {
                     <td>
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                         <button type="submit" name="check" class="btn btn-secondary">Check Result</button>
-                         <button type="submit" name="next" class="btn btn-success">Next</button>
-
+                        <button type="submit" name="results" class="btn btn-success">Results</button>
                     </td>
                 </tr>
             </table>
@@ -222,25 +228,24 @@ if (isset($_POST['check'])) {
             }
         }, 1000);
 
-
-    // Handle pagination dynamically
-    const paginationLinks = document.querySelectorAll('#pagination .page-link');
-    paginationLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-        event.preventDefault();
-        const page = event.target.getAttribute('href').split('=')[1];
-        fetch(`?page=${page}`)
-            .then(response => response.text())
-            .then(data => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const newQuizContent = doc.querySelector('.quiz-container').innerHTML;
-            document.querySelector('.quiz-container').innerHTML = newQuizContent;
-            history.pushState(null, '', `?page=${page}`);
-            })
-            .catch(error => console.error('Error fetching page:', error));
+        // Handle pagination dynamically
+        const paginationLinks = document.querySelectorAll('#pagination .page-link');
+        paginationLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const page = event.target.getAttribute('href').split('=')[1];
+                fetch(`?page=${page}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data, 'text/html');
+                        const newQuizContent = doc.querySelector('.quiz-container').innerHTML;
+                        document.querySelector('.quiz-container').innerHTML = newQuizContent;
+                        history.pushState(null, '', `?page=${page}`);
+                    })
+                    .catch(error => console.error('Error fetching page:', error));
+            });
         });
-    });
     </script>
 </body>
 </html>
